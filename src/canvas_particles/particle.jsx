@@ -22,7 +22,20 @@ export default class Particle {
         this.min_radious = this.radius
         this.color = random_color(colors)
     }
-    draw(c){
+    render(state){
+        let c = state.context
+        // bounce off edge
+        if(this.x - this.radius <= 0 || this.x + this.radius >= window.innerWidth){
+                this.velocity.x = - this.velocity.x
+            }
+        if(this.y - this.radius <= 0 || this.y + this.radius >= window.innerHeight){
+                this.velocity.y = - this.velocity.y
+            }
+        //
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+        //Draw
+        c.clearRect
         c.beginPath();
         c.arc(this.x , this.y , this.radius, 0 , Math.PI*2, false)
         c.globalAlpha = this.opacity
@@ -32,20 +45,6 @@ export default class Particle {
         c.strokeStyle = this.color
         c.stroke()
         c.closePath()
-    }
-    update(context){
         
-            // bounce off edge
-            if(this.x - this.radius <= 0 || this.x + this.radius >= window.innerWidth){
-                this.velocity.x = - this.velocity.x
-            }
-            if(this.y - this.radius <= 0 || this.y + this.radius >= window.innerHeight){
-                this.velocity.y = - this.velocity.y
-            }
-        //
-        this.x += this.velocity.x
-        this.y += this.velocity.y
-        //Draw
-        this.draw(context)
     }
 }
